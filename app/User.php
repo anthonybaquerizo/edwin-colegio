@@ -46,4 +46,12 @@ class User extends Authenticatable
         'status' => 'boolean',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function info(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(UserInfo::class, 'user_id', 'id');
+    }
+
 }

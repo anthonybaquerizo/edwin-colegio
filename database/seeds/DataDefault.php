@@ -39,6 +39,7 @@ class DataDefault extends Seeder
                 'names' => 'Administrador',
                 'last_name' => null,
                 'phone' => null,
+                'gender' => 'M',
             ])->save();
     }
 }

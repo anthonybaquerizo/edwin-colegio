@@ -16,6 +16,8 @@ class UserInfo extends Model
         'names',
         'last_name',
         'phone',
+        'gender',
+        'photo_path',
         'status'
     ];
 
@@ -24,5 +26,13 @@ class UserInfo extends Model
         'phone' => 'string',
         'status' => 'boolean',
     ];
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->last_name . ',' . $this->names;
+    }
 
 }

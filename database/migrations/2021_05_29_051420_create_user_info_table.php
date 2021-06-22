@@ -15,10 +15,12 @@ class CreateUserInfoTable extends Migration
     {
         Schema::create('user_info', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->primary();
-            $table->string('dni', 0);
+            $table->string('dni', 8);
             $table->string('names');
             $table->string('last_name')->nullable();
             $table->string('phone', 50)->nullable();
+            $table->string('photo_path', 100)->nullable();
+            $table->char('gender', 1);
             $table->timestamps();
             $table->boolean('status')->default(1);
             $table->foreign('user_id')

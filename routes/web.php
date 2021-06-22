@@ -20,3 +20,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('panel')->group(function() {
+
+    Route::prefix('user')->group(function() {
+
+        Route::put('update', 'Panel\\UserController@update');
+
+        Route::post('change_photo', 'Panel\\UserController@changePhoto');
+
+    });
+
+});
