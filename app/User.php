@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -52,6 +53,34 @@ class User extends Authenticatable
     public function info(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(UserInfo::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(UserType::class, 'user_type_id', 'id');
+    }
+
+    /**
+     * @param $type
+     * @param $names
+     * @param $username
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function search($type, $names, $username): \Illuminate\Contracts\Pagination\LengthAwarePaginator
+    {
+        return DB::table('user')
+            ->select('user.*', 'user_info.*')
+            ->join('user_info', 'user.id', '=', 'user_info.user_id', 'inner')
+            ->where('user.user_type_id', '=', $type)
+            ->where(function ($query) use ($names, $username) {
+                $query->where('user_info.names', 'like', "%{$names}%")
+                    ->orWhere('user.username', 'like', "%{$username}%");
+            })
+            ->orderBy('user.id', 'DESC')
+            ->paginate();
     }
 
 }

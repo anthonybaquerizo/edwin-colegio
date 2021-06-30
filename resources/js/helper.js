@@ -2,7 +2,7 @@ export default {
     /**
      * @var {string}
      */
-    BASE_URL: window.location.origin,
+    BASE_URL: window.location.origin + '/',
     /**
      * @param button
      */

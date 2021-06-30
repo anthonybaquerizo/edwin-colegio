@@ -37336,6 +37336,163 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/admin/user/create.js":
+/*!*******************************************!*\
+  !*** ./resources/js/admin/user/create.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../helper */ "./resources/js/helper.js");
+/*!
+ *
+ * @version 1.0.0
+ */
+
+var objUserCreate = {};
+$(function () {
+  /**
+   * Realiza la creación del usuario
+   */
+  objUserCreate.save = function () {
+    var button = $(this);
+    _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonLoading(button);
+    var formData = new FormData();
+    var file = $('#photo')[0].files[0];
+    formData.append('file', file);
+    formData.append('txt_type', $('#txt_type').val());
+    formData.append('txt_dni', $('#txt_dni').val());
+    formData.append('txt_lastname', $('#txt_lastname').val());
+    formData.append('txt_names', $('#txt_names').val());
+    formData.append('txt_email', $('#txt_email').val());
+    formData.append('txt_phone', $('#txt_phone').val());
+    formData.append('cbo_gender', $('#cbo_gender').val());
+    formData.append('txt_username', $('#txt_username').val());
+    formData.append('txt_password', $('#txt_password').val());
+    axios.post('panel/admin/user/store', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(function (_ref) {
+      var data = _ref.data;
+      $('#messages').before(_helper__WEBPACK_IMPORTED_MODULE_0__["default"].alertDisplay('success', data.message));
+      setTimeout(function () {
+        location.href = _helper__WEBPACK_IMPORTED_MODULE_0__["default"].BASE_URL + 'panel/admin/user/index/' + $('#txt_type').val();
+      }, 1000);
+    })["catch"](function (_ref2) {
+      var data = _ref2.data;
+      var errors = Object.entries(data.errors);
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].errorDisplay(errors);
+    })["finally"](function () {
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonCloseLoading(button);
+    });
+  };
+});
+$(document).ready(function () {
+  $('#btnSave').click(objUserCreate.save);
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/user/edit.js":
+/*!*****************************************!*\
+  !*** ./resources/js/admin/user/edit.js ***!
+  \*****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../helper */ "./resources/js/helper.js");
+/*!
+ *
+ * @version 1.0.0
+ */
+
+var objUserEdit = {};
+$(function () {
+  /**
+   * Realiza la creación del usuario
+   */
+  objUserEdit.save = function () {
+    var button = $(this);
+    _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonLoading(button);
+    var formData = new FormData();
+    var file = $('#photo')[0].files[0];
+    formData.append('file', file);
+    formData.append('txt_dni', $('#txt_dni').val());
+    formData.append('txt_lastname', $('#txt_lastname').val());
+    formData.append('txt_names', $('#txt_names').val());
+    formData.append('txt_email', $('#txt_email').val());
+    formData.append('txt_phone', $('#txt_phone').val());
+    formData.append('cbo_gender', $('#cbo_gender').val());
+    formData.append('txt_username', $('#txt_username').val());
+    formData.append('txt_password', $('#txt_password').val());
+    axios.post('panel/admin/user/update/' + $('#user_id').val(), formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(function (_ref) {
+      var data = _ref.data;
+      $('#messages').before(_helper__WEBPACK_IMPORTED_MODULE_0__["default"].alertDisplay('success', data.message));
+      setTimeout(function () {
+        location.href = _helper__WEBPACK_IMPORTED_MODULE_0__["default"].BASE_URL + 'panel/admin/user/index/' + $('#txt_type').val();
+      }, 1000);
+    })["catch"](function (_ref2) {
+      var data = _ref2.data;
+      var errors = Object.entries(data.errors);
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].errorDisplay(errors);
+    })["finally"](function () {
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonCloseLoading(button);
+    });
+  };
+});
+$(document).ready(function () {
+  $('#btnSaveEdit').click(objUserEdit.save);
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/user/list.js":
+/*!*****************************************!*\
+  !*** ./resources/js/admin/user/list.js ***!
+  \*****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helper */ "./resources/js/helper.js");
+/*!
+ *
+ * @version 1.0.0
+ */
+
+var objUserList = {};
+$(function () {
+  /**
+   * Elimina un usuario
+   */
+  objUserList.removeItem = function () {
+    var id = $(this).data('id');
+    axios["delete"]('panel/admin/user/delete/' + id).then(function (_ref) {
+      var data = _ref.data;
+      location.href = data.refresh;
+    })["catch"](function (_ref2) {
+      var data = _ref2.data;
+      var errors = Object.entries(data.errors);
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].errorDisplay(errors);
+    });
+  };
+});
+$(document).ready(function () {
+  $('.option-delete').click(objUserList.removeItem);
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -37416,7 +37573,7 @@ __webpack_require__.r(__webpack_exports__);
   /**
    * @var {string}
    */
-  BASE_URL: window.location.origin,
+  BASE_URL: window.location.origin + '/',
 
   /**
    * @param button
@@ -37530,7 +37687,6 @@ $(function () {
       txt_password: $('#txt_password').val()
     }).then(function (_ref) {
       var data = _ref.data;
-      console.log(data);
       $('#appHome').before(_helper__WEBPACK_IMPORTED_MODULE_0__["default"].alertDisplay('success', data.message));
     })["catch"](function (_ref2) {
       var data = _ref2.data;
@@ -37584,14 +37740,17 @@ $(document).ready(function () {
 /***/ }),
 
 /***/ 0:
-/*!************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/home.js ./resources/sass/app.scss ***!
-  \************************************************************************************/
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/home.js ./resources/js/admin/user/list.js ./resources/js/admin/user/create.js ./resources/js/admin/user/edit.js ./resources/sass/app.scss ***!
+  \********************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\home.js */"./resources/js/home.js");
+__webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user\list.js */"./resources/js/admin/user/list.js");
+__webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user\create.js */"./resources/js/admin/user/create.js");
+__webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user\edit.js */"./resources/js/admin/user/edit.js");
 module.exports = __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\sass\app.scss */"./resources/sass/app.scss");
 
 

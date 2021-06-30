@@ -56,18 +56,18 @@
                                     <i class="fa fa-bullhorn" ></i> Publicidad
                                 </a>
                                 <div class="dropdown-divider" ></div>
-                                <a class="dropdown-item" href="#" >
+                                <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 3])  }}" >
                                     <i class="fa fa-list" ></i> Lista de alumnos
                                 </a>
-                                <a class="dropdown-item" href="#" >
+                                <a class="dropdown-item" href="{{ route('admin.user.create', ['type' => 3]) }}" >
                                     <i class="fa fa-plus" ></i> Crear nuevo alumno
                                 </a>
                                 <div class="dropdown-divider" ></div>
-                                <a class="dropdown-item" href="#" >
+                                <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 2])  }}" >
                                     <i class="fa fa-list" ></i> Lista de profesores
                                 </a>
-                                <a class="dropdown-item" href="#" >
-                                    <i class="fa fa-plus" ></i> Crear nuevo alumno
+                                <a class="dropdown-item" href="{{ route('admin.user.create', ['type' => 2]) }}" >
+                                    <i class="fa fa-plus" ></i> Crear nuevo profesor
                                 </a>
                             </div>
                         </li>

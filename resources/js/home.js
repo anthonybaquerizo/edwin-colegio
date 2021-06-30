@@ -24,7 +24,6 @@ $(function () {
             cbo_gender: $('#cbo_gender').val(),
             txt_password: $('#txt_password').val(),
         }).then(({data}) => {
-            console.log(data);
             $('#appHome').before(helper.alertDisplay('success', data.message));
         }).catch(({data}) => {
             const errors = Object.entries(data.errors);

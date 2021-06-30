@@ -28,7 +28,24 @@ Route::prefix('panel')->group(function() {
         Route::put('update', 'Panel\\UserController@update');
 
         Route::post('change_photo', 'Panel\\UserController@changePhoto');
-
     });
 
+    Route::prefix('admin')->group(function() {
+
+        Route::prefix('user')->group(function() {
+
+            Route::get('index/{type}', 'Panel\\Admin\\UserController@index')
+                ->name('admin.user.index');
+            Route::get('create/{type}', 'Panel\\Admin\\UserController@create')
+                ->name('admin.user.create');
+            Route::get('edit/{id}', 'Panel\\Admin\\UserController@edit')
+                ->name('admin.user.edit');
+            Route::post('store', 'Panel\\Admin\\UserController@store')
+                ->name('admin.user.store');
+            Route::post('update/{id}', 'Panel\\Admin\\UserController@update')
+                ->name('admin.user.update');
+            Route::delete('delete/{id}', 'Panel\\Admin\\UserController@delete')
+                ->name('admin.user.delete');
+        });
+    });
 });

@@ -21,11 +21,11 @@
                                      style="width: auto; height: auto; max-width: 100%; max-height: 100%;" >
                             @endif
                         </div>
-                        <div class="form-group" >
-                            <input type="file" class="form-control" id="change_photo"
-                                   value="" >
-                            <small class="text-muted" >Solo se permite jpg o png</small>
-                        </div>
+{{--                        <div class="form-group" >--}}
+{{--                            <input type="file" class="form-control" id="change_photo"--}}
+{{--                                   value="" >--}}
+{{--                            <small class="text-muted" >Solo se permite jpg o png</small>--}}
+{{--                        </div>--}}
                     </div>
                     <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
                         <div class="form-group row">
