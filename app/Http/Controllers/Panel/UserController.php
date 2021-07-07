@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Panel;
 
+use App\Course;
+use App\CourseResource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Panel\User\UpdateRequest;
 use App\User;
@@ -61,6 +63,21 @@ class UserController extends Controller
         $courses = (new User())->searchAlumnCourses(Auth::user()->id);
         return view('courses', compact(
             'courses'
+        ));
+    }
+
+    /**
+     * @param $courseId
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function resources($courseId)
+    {
+        $objCourse = Course::find($courseId);
+        $resources = CourseResource::all()
+            ->where('course_id', '=', $objCourse->id);
+        return view('resources', compact(
+            'objCourse',
+            'resources'
         ));
     }
 

@@ -32,6 +32,9 @@ Route::prefix('panel')->group(function() {
         Route::get('courses', 'Panel\\UserController@courses')
             ->name('user.courses');
 
+        Route::get('resources/{courseId}', 'Panel\\UserController@resources')
+            ->name('user.resources');
+
         Route::get('course/{userId}', 'Panel\\UserCourseController@course')
             ->name('course.user');
         Route::post('course/store/{userId}', 'Panel\\UserCourseController@store')

@@ -61,7 +61,7 @@
                                     <td class="text-left" >
                                         <a href="{{ asset($resource->file_path) }}" class="btn btn-link btn-sm"
                                            download="{{ $resource->file_path }}" >
-                                            <i class="fa fa-download-alt" ></i> Descargar recurso
+                                            <i class="fa fa-download" ></i> Descargar recurso
                                         </a>
                                     </td>
                                     <td class="text-left" >

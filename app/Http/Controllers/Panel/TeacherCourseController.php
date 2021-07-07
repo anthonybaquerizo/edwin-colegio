@@ -123,7 +123,6 @@ class TeacherCourseController extends Controller
     public function deleteResource($resourceId)
     {
         $objResource = CourseResource::find($resourceId);
-        dd($objResource);
         if (empty($objResource)) {
             return back();
         }

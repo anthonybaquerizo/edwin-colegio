@@ -12,7 +12,7 @@
                     <a href="{{ route('course.user.hour', ['courseId' => $objCourse->id]) }}" class="btn btn-secondary btn-sm" >
                         <i class="fa fa-angle-right"></i> Mis Notas
                     </a>
-                    <a href="{{ route('course.user.hour', ['courseId' => $objCourse->id]) }}" class="btn btn-secondary btn-sm" >
+                    <a href="{{ route('user.resources', ['courseId' => $objCourse->id]) }}" class="btn btn-secondary btn-sm" >
                         <i class="fa fa-angle-right"></i> Recursos
                     </a>
                 </div>
