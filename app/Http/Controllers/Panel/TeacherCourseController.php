@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Course;
+use App\CourseResource;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Panel\Teacher\ResourceRequest;
 use App\User;
 use App\UserCourseHour;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TeacherCourseController extends Controller
 {
@@ -72,6 +75,61 @@ class TeacherCourseController extends Controller
             }
         }
         return response()->json(['message' => 'Se actualizo la asistencia correctamente.']);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function resource(Request $request, $courseId)
+    {
+        $objCourse = Course::find($courseId);
+        if (empty($objCourse)) {
+            abort(404);
+        }
+        $resources = CourseResource::all()
+            ->where('course_id', '=', $objCourse->id);
+        return view('teacher.resource', compact(
+            'objCourse',
+            'resources'
+        ));
+    }
+
+    /**
+     * @param ResourceRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveResource(ResourceRequest $request)
+    {
+        $course_id = $request->input('course_id');
+        $objCourse = Course::find($course_id);
+        $file = $request->file('file');
+        $path = $file->store('resource');
+        $objCourseResource = (new CourseResource())->fill([
+            'resource_id' => null,
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'file_path' => $path,
+            'status' => 1,
+        ]);
+        $objCourseResource->course()->associate($objCourse);
+        $objCourseResource->save();
+        return response()->json(['message' => 'Se guardo correctamente el recurso.']);
+    }
+
+    /**
+     * @param $resourceId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteResource($resourceId)
+    {
+        $objResource = CourseResource::find($resourceId);
+        dd($objResource);
+        if (empty($objResource)) {
+            return back();
+        }
+        Storage::delete($objResource->file_path);
+        $objResource->delete();
+        return back();
     }
 
 }

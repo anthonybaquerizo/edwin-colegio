@@ -50,6 +50,12 @@ Route::prefix('panel')->group(function() {
             ->name('teacher.courses.assistance');
         Route::post('assistance/save', 'Panel\\TeacherCourseController@saveAssistance')
             ->name('teacher.courses.assistance.save');
+        Route::get('resource/{courseId}', 'Panel\\TeacherCourseController@resource')
+            ->name('teacher.courses.resource');
+        Route::post('resource/save', 'Panel\\TeacherCourseController@saveResource')
+            ->name('teacher.courses.resource.save');
+        Route::post('resource/delete/{resourceId}', 'Panel\\TeacherCourseController@deleteResource')
+            ->name('teacher.courses.resource.delete');
     });
 
     Route::prefix('admin')->group(function() {

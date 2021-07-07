@@ -64,6 +64,9 @@
                                                 <a href="{{ route('teacher.courses.assistance', ['courseId' => $item->course_id]) }}" class="dropdown-item" >
                                                     <i class="fa fa-list" ></i> Asistencias de alumnos
                                                 </a>
+                                                <a href="{{ route('teacher.courses.resource', ['courseId' => $item->course_id]) }}" class="dropdown-item" >
+                                                    <i class="fa fa-external-link-alt" ></i> Recursos
+                                                </a>
                                             </div>
                                         </div>
                                     </td>

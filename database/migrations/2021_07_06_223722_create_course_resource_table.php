@@ -16,7 +16,7 @@ class CreateCourseResourceTable extends Migration
         Schema::create('course_resource', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('course_id');
-            $table->unsignedBigInteger('resource_id');
+            $table->unsignedBigInteger('resource_id')->nullable();
             $table->string('title', 100);
             $table->text('description')->nullable();
             $table->string('file_path', 100);
