@@ -19,5 +19,6 @@ mix.js([
     'resources/js/admin/user/edit.js',
     'resources/js/admin/course/create.js',
     'resources/js/user_course.js',
+    'resources/js/teacher/assistance.js',
 ], 'public/js')
     .sass('resources/sass/app.scss', 'public/css');

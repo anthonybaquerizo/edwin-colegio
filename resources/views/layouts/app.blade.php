@@ -48,6 +48,13 @@
                                 </a>
                             </li>
                         @endif
+                        @if (Auth::user()->user_type_id == 2)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('teacher.courses') }}">
+                                    <i class="fa fa-school"></i> Asignatura Matriculada
+                                </a>
+                            </li>
+                        @endif
                         @if (Auth::user()->user_type_id == 1)
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuAdmin"

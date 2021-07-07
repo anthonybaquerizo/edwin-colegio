@@ -114,6 +114,34 @@ class User extends Authenticatable
     }
 
     /**
+     * @param $userId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function searchTeacherCourses($userId)
+    {
+        return DB::table('user_course')
+            ->select(
+                'user_course.id',
+                'user_course.status',
+                DB::raw('user_course.course_id AS course_id'),
+                DB::raw('user_course.user_id AS user_id'),
+                'course.code',
+                'course.name',
+                DB::raw('course_grade.name AS grade'),
+                DB::raw('course_section.name AS section'),
+                DB::raw('course_period.name AS period'),
+                'course.description'
+            )
+            ->join('course', 'user_course.course_id', '=', 'course.id', 'inner')
+            ->join('course_grade', 'course.course_grade_id', '=', 'course_grade.id', 'inner')
+            ->join('course_section', 'course.course_section_id', '=', 'course_section.id', 'inner')
+            ->join('course_period', 'course.course_period_id', '=', 'course_period.id', 'inner')
+            ->where('course.user_teacher_id', '=', $userId)
+            ->groupBy('user_course.course_id')
+            ->paginate();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public static function getTeacher(): \Illuminate\Database\Eloquent\Collection

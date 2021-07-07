@@ -65,6 +65,45 @@ class Course extends Model
     }
 
     /**
+     * @param $courseId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function assistanceDate($courseId)
+    {
+        return DB::table('user_course')
+            ->join('user_course_hours', 'user_course.id','=', 'user_course_hours.user_course_id')
+            ->join('course_hours', 'user_course_hours.course_hours_id', '=', 'course_hours.id')
+            ->where('user_course.course_id', '=', $courseId)
+            ->groupBy('course_hours.date')
+            ->select(
+                DB::raw("DATE_FORMAT(course_hours.date, '%d/%m/%Y') as date")
+            )
+            ->paginate();
+    }
+
+    /**
+     * @param $courseId
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function assistance($courseId, $date)
+    {
+        return DB::table('user_course')
+            ->select(
+                'user_course_hours.id',
+                DB::raw("CONCAT(user_info.last_name, ',', user_info.names) as student"),
+                'user_course_hours.status'
+            )
+            ->join('course', 'user_course.course_id','=', 'course.id')
+            ->join('user_course_hours', 'user_course.id','=', 'user_course_hours.user_course_id')
+            ->join('user', 'user_course.user_id', '=', 'user.id', 'inner')
+            ->join('user_info', 'user.id', '=', 'user_info.user_id', 'inner')
+            ->join('course_hours', 'user_course_hours.course_hours_id', '=', 'course_hours.id')
+            ->where('user_course.course_id', '=', $courseId)
+            ->where('course_hours.date', '=', $date)
+            ->paginate();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function grade(): \Illuminate\Database\Eloquent\Relations\BelongsTo

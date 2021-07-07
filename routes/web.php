@@ -42,6 +42,16 @@ Route::prefix('panel')->group(function() {
             ->name('course.user.hour');
     });
 
+    Route::prefix('teacher')->group(function() {
+
+        Route::get('courses', 'Panel\\TeacherCourseController@courses')
+            ->name('teacher.courses');
+        Route::get('assistance/{courseId}', 'Panel\\TeacherCourseController@assistance')
+            ->name('teacher.courses.assistance');
+        Route::post('assistance/save', 'Panel\\TeacherCourseController@saveAssistance')
+            ->name('teacher.courses.assistance.save');
+    });
+
     Route::prefix('admin')->group(function() {
 
         Route::prefix('user')->group(function() {
