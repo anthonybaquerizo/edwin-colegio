@@ -37366,17 +37366,77 @@ $(function () {
       setTimeout(function () {
         location.href = _helper__WEBPACK_IMPORTED_MODULE_0__["default"].BASE_URL + 'panel/admin/course/index/';
       }, 1000);
-    })["catch"](function (_ref2) {
-      var data = _ref2.data;
-      var errors = Object.entries(data.errors);
-      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].errorDisplay(errors);
+    })["catch"](function (error) {
+      if (error.status === 422) {
+        var errors = Object.entries(error.data.errors);
+        _helper__WEBPACK_IMPORTED_MODULE_0__["default"].errorDisplay(errors);
+      } else {
+        $('#messages').before(_helper__WEBPACK_IMPORTED_MODULE_0__["default"].alertDisplay('danger', error.data.message));
+      }
     })["finally"](function () {
       _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonCloseLoading(button);
     });
   };
+
+  objCourseCreate.addDate = function () {
+    var table = $('#tblCourseDates > tbody');
+    var position = table.find('tr').length;
+    table.append(objCourseCreate._addDate(position));
+  };
+  /**
+   * @param position
+   * @returns {string}
+   * @private
+   */
+
+
+  objCourseCreate._addDate = function (position) {
+    var row = '<tr data-position="' + position + '" >';
+    row += '<td>';
+    row += '<div class="form-group" >';
+    row += '<input type="date" class="form-control" id="course_date_value[' + position + ']" name="course_date_value[' + position + ']" value="" />';
+    row += '</div>';
+    row += '</td>';
+    row += '<td>';
+    row += '<div class="form-group" >';
+    row += '<input type="time" class="form-control" id="course_date_start[' + position + ']" name="course_date_start[' + position + ']" value="" />';
+    row += '</div>';
+    row += '</td>';
+    row += '<td>';
+    row += '<div class="form-group" >';
+    row += '<input type="time" class="form-control" id="course_date_end[' + position + ']" name="course_date_end[' + position + ']" value="" />';
+    row += '</div>';
+    row += '</td>';
+    row += '<td>';
+    row += '<button type="button" role="button" class="btn btn-danger btn-sm option-course-hour-delete" >';
+    row += '<i class="fa fa-trash-o" ></i> Eliminar';
+    row += '</button>';
+    row += '<input type="hidden" class="d-none" id="course_date_operation[' + position + ']" name="course_date_operation[' + position + ']" value="1" >';
+    row += '</td>';
+    row += '</tr>';
+    return row;
+  };
+  /**
+   * Elimina un item
+   */
+
+
+  objCourseCreate.deleteDate = function () {
+    var button = $(this);
+    var row = button.parents('tr');
+    var position = row.data('position');
+
+    if (document.getElementById('course_date_operation[' + position + ']')) {
+      $(document.getElementById('course_date_operation[' + position + ']')).val(0);
+    }
+
+    row.hide();
+  };
 });
 $(document).ready(function () {
   $('#btnSaveCourse').click(objCourseCreate.save);
+  $('#btnAddCourseDate').click(objCourseCreate.addDate);
+  $(document).on('click', '.option-course-hour-delete', objCourseCreate.deleteDate);
 });
 
 /***/ }),

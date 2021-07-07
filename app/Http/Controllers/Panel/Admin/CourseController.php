@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel\Admin;
 
 use App\Course;
 use App\CourseGrade;
+use App\Coursehour;
 use App\CoursePeriod;
 use App\CourseSection;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,7 @@ use App\Http\Requests\Panel\Admin\Course\UpdateRequest;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -63,12 +65,14 @@ class CourseController extends Controller
         $sections = CourseSection::all()->where('status', '=', 1);
         $periods = CoursePeriod::all()->where('status', '=', 1);
         $teachers = User::getTeacher();
+        $dates = Coursehour::all()->where('course_id', '=', $objCourse->id);
         return view('admin.course.edit', compact(
             'objCourse',
             'grades',
             'sections',
             'periods',
-            'teachers'
+            'teachers',
+            'dates'
         ));
     }
 
@@ -77,22 +81,73 @@ class CourseController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        $objGrade = CourseGrade::find($request->input('grade_id'));
-        $objSection = CourseSection::find($request->input('section_id'));
-        $objPeriod = CoursePeriod::find($request->input('period_id'));
-        $objTeacher = User::find($request->input('teacher_id'));
-        $objCourse = (new Course())->fill([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'status' => 1,
-        ]);
-        $objCourse->createCode();
-        $objCourse->grade()->associate($objGrade);
-        $objCourse->section()->associate($objSection);
-        $objCourse->period()->associate($objPeriod);
-        $objCourse->teacher()->associate($objTeacher);
-        $objCourse->save();
-        return response()->json(['message' => 'Curso creado correctamente']);
+        try {
+
+            $objGrade = CourseGrade::find($request->input('grade_id'));
+            $objSection = CourseSection::find($request->input('section_id'));
+            $objPeriod = CoursePeriod::find($request->input('period_id'));
+            $objTeacher = User::find($request->input('teacher_id'));
+            $objCourse = (new Course())->fill([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'status' => 1,
+            ]);
+            $objCourse->createCode();
+            $objCourse->grade()->associate($objGrade);
+            $objCourse->section()->associate($objSection);
+            $objCourse->period()->associate($objPeriod);
+            $objCourse->teacher()->associate($objTeacher);
+
+            DB::beginTransaction();
+
+            $objCourse->save();
+
+            $course_date_value = $request->input('course_date_value');
+            $course_date_start = $request->input('course_date_start');
+            $course_date_end = $request->input('course_date_end');
+            $course_date_operation = $request->input('course_date_operation');
+            if (empty($course_date_value)) {
+                throw new \Exception('Debe ingresar el horario del curso.');
+            }
+
+            // Se eliminan
+            (new Coursehour())->newQuery()
+                ->where('course_id', '=', $objCourse->id)
+                ->delete();
+
+            foreach ($course_date_value as $key => $value) {
+                $date = (isset($course_date_value[$key])) ? $course_date_value[$key] : null;
+                $start = (isset($course_date_start[$key])) ? $course_date_start[$key] : null;
+                $end = (isset($course_date_end[$key])) ? $course_date_end[$key] : null;
+                $operation = (isset($course_date_operation[$key])) ? $course_date_operation[$key] : 0;
+                if ($operation == 1) {
+                    $line = 'Línea ' . ($key + 1) . ': ';
+                    if (empty($date)) {
+                        throw new \Exception($line . 'Debe ingresar la fecha.');
+                    }
+                    if (empty($start)) {
+                        throw new \Exception($line . 'Debe ingresar el inicio de la fecha.');
+                    }
+                    if (empty($end)) {
+                        throw new \Exception($line . 'Debe ingresar el final de la fecha.');
+                    }
+                    $objCourseHour = (new Coursehour())->fill([
+                        'date' => $date,
+                        'hour_start' => $start,
+                        'hour_end' => $end,
+                        'status' => 1
+                    ]);
+                    $objCourseHour->course()->associate($objCourse);
+                    $objCourseHour->save();
+                }
+            }
+            DB::commit();
+            return response()->json(['message' => 'Curso creado correctamente']);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return response()->json(['message' => $ex->getMessage()], 500);
+        }
     }
 
     /**
@@ -100,26 +155,76 @@ class CourseController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $objCourse = Course::find($id);
-        if (empty($objCourse)) {
-            return response()->json(['message' => 'El curso no pudo ser encontrado.'], 500);
+        try {
+            $objCourse = Course::find($id);
+            if (empty($objCourse)) {
+                return response()->json(['message' => 'El curso no pudo ser encontrado.'], 500);
+            }
+            $objGrade = CourseGrade::find($request->input('grade_id'));
+            $objSection = CourseSection::find($request->input('section_id'));
+            $objPeriod = CoursePeriod::find($request->input('period_id'));
+            $objTeacher = User::find($request->input('teacher_id'));
+            $objCourse->fill([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+                'status' => 1,
+            ]);
+            $objCourse->createCode();
+            $objCourse->grade()->associate($objGrade);
+            $objCourse->section()->associate($objSection);
+            $objCourse->period()->associate($objPeriod);
+            $objCourse->teacher()->associate($objTeacher);
+
+            DB::beginTransaction();
+
+            $objCourse->save();
+
+            $course_date_value = $request->input('course_date_value');
+            $course_date_start = $request->input('course_date_start');
+            $course_date_end = $request->input('course_date_end');
+            $course_date_operation = $request->input('course_date_operation');
+            if (empty($course_date_value)) {
+                throw new \Exception('Debe ingresar el horario del curso.');
+            }
+
+            // Se eliminan
+            (new Coursehour())->newQuery()
+                ->where('course_id', '=', $objCourse->id)
+                ->delete();
+
+            foreach ($course_date_value as $key => $value) {
+                $date = (isset($course_date_value[$key])) ? $course_date_value[$key] : null;
+                $start = (isset($course_date_start[$key])) ? $course_date_start[$key] : null;
+                $end = (isset($course_date_end[$key])) ? $course_date_end[$key] : null;
+                $operation = (isset($course_date_operation[$key])) ? $course_date_operation[$key] : 0;
+                if ($operation == 1) {
+                    $line = 'Línea ' . ($key + 1) . ': ';
+                    if (empty($date)) {
+                        throw new \Exception($line . 'Debe ingresar la fecha.');
+                    }
+                    if (empty($start)) {
+                        throw new \Exception($line . 'Debe ingresar el inicio de la fecha.');
+                    }
+                    if (empty($end)) {
+                        throw new \Exception($line . 'Debe ingresar el final de la fecha.');
+                    }
+                    $objCourseHour = (new Coursehour())->fill([
+                        'date' => $date,
+                        'hour_start' => $start,
+                        'hour_end' => $end,
+                        'status' => 1
+                    ]);
+                    $objCourseHour->course()->associate($objCourse);
+                    $objCourseHour->save();
+                }
+            }
+            DB::commit();
+            return response()->json(['message' => 'Curso actualizado correctamente']);
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            return response()->json(['message' => $ex->getMessage()], 500);
         }
-        $objGrade = CourseGrade::find($request->input('grade_id'));
-        $objSection = CourseSection::find($request->input('section_id'));
-        $objPeriod = CoursePeriod::find($request->input('period_id'));
-        $objTeacher = User::find($request->input('teacher_id'));
-        $objCourse->fill([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-            'status' => 1,
-        ]);
-        $objCourse->createCode();
-        $objCourse->grade()->associate($objGrade);
-        $objCourse->section()->associate($objSection);
-        $objCourse->period()->associate($objPeriod);
-        $objCourse->teacher()->associate($objTeacher);
-        $objCourse->save();
-        return response()->json(['message' => 'Curso actualizado correctamente']);
     }
 
 }

@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('panel')->group(function() {
 
-    Route::prefix('user')->group(function() {
+    Route::prefix('student')->group(function() {
 
         Route::put('update', 'Panel\\UserController@update');
 

@@ -59,6 +59,7 @@ class Course extends Model
             ->join('user', 'course.user_teacher_id', '=', 'user.id', 'inner')
             ->join('user_info', 'user.id', '=', 'user_info.user_id', 'inner')
             ->where('course.name', 'like', "%{$name}%")
+            ->orderBy('course.created_at', 'DESC')
             ->paginate();
     }
 

@@ -81,6 +81,32 @@
                                       class="form-control"  ></textarea>
                         </div>
                     </div>
+                    <div class="card-title border-bottom mt-3" >
+                        <h5>Horario</h5>
+                    </div>
+                    <div class="table-responsive" >
+                        <table class="table table-sm table-bordered" id="tblCourseDates" >
+                            <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th style="width: 100px; min-width: 100px" ></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="4" >
+                                    <button type="button" role="button" class="btn btn-secondary btn-sm" id="btnAddCourseDate" >
+                                        <i class="fa fa-plus" ></i> Agregar fecha
+                                    </button>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </form>
             </div>
             <div class="card-footer">

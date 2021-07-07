@@ -1,21 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" >
+    <div class="container">
         <div class="card">
             <div class="card-header">
                 Editar curso
             </div>
             <div class="card-body">
-                <div id="messages" ></div>
-                <form action="{{ route('admin.course.update', ['id' => $objCourse->id]) }}" method="POST" id="frmGeneral" >
+                <div id="messages"></div>
+                <form action="{{ route('admin.course.update', ['id' => $objCourse->id]) }}" method="POST"
+                      id="frmGeneral">
                     @method('put')
-                    <div class="row" >
-                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12" >
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12">
                             <label for="grade_id">
                                 Grado
                             </label>
-                            <select name="grade_id" id="grade_id" class="custom-select" >
+                            <select name="grade_id" id="grade_id" class="custom-select">
                                 <option value="">Elegir</option>
                                 @if($grades->isNotEmpty())
                                     @foreach($grades as $grade)
@@ -27,7 +28,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12"  >
+                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12">
                             <label for="section_id">
                                 Sección
                             </label>
@@ -43,7 +44,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12" >
+                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12">
                             <label for="period_id">
                                 Sección
                             </label>
@@ -59,7 +60,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12" >
+                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12">
                             <label for="teacher_id">
                                 Profesor
                             </label>
@@ -75,22 +76,91 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12" >
+                        <div class="col-xl-4 col-lg-4 col-sm-4 col-12">
                             <label for="name">
                                 Nombre
                             </label>
                             <input type="text" class="form-control"
                                    maxlength="100" id="name" name="name"
-                                   value="{{ $objCourse->name }}" >
+                                   value="{{ $objCourse->name }}">
                         </div>
-                        <div class="col-12" >
+                        <div class="col-12">
                             <label for="description">
                                 Descripción
                             </label>
                             <textarea id="description" name="description"
                                       rows="5"
-                                      class="form-control"  >{{ $objCourse->description }}</textarea>
+                                      class="form-control">{{ $objCourse->description }}</textarea>
                         </div>
+                    </div>
+                    <div class="card-title border-bottom mt-3">
+                        <h5>Horario</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered" id="tblCourseDates">
+                            <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th style="width: 100px; min-width: 100px" ></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if (!empty($dates))
+                                @php $position = 0; @endphp
+                                @foreach ($dates as $key => $value)
+                                    <tr data-position="@php echo $position @endphp">
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="date" class="form-control"
+                                                       id="course_date_value[@php echo $position @endphp]"
+                                                       name="course_date_value[@php echo $position @endphp]"
+                                                       value="{{ $value->date }}"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="time" class="form-control"
+                                                       id="course_date_start[@php echo $position @endphp]"
+                                                       name="course_date_start[@php echo $position @endphp]"
+                                                       value="{{ $value->hour_start }}"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="time" class="form-control"
+                                                       id="course_date_end[@php echo $position @endphp]"
+                                                       name="course_date_end[@php echo $position @endphp]"
+                                                       value="{{ $value->hour_end }}"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" role="button"
+                                                    class="btn btn-danger btn-sm option-course-hour-delete">
+                                                <i class="fa fa-trash"></i> Eliminar
+                                            </button>
+                                            <input type="hidden" class="d-none"
+                                                   id="course_date_operation[@php echo $position @endphp]"
+                                                   name="course_date_operation[@php echo $position @endphp]"
+                                                   value="1">
+                                        </td>
+                                    </tr>
+                                    @php ++$position @endphp
+                                @endforeach
+                            @endif
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="4">
+                                    <button type="button" role="button" class="btn btn-secondary btn-sm"
+                                            id="btnAddCourseDate">
+                                        <i class="fa fa-plus"></i> Agregar fecha
+                                    </button>
+                                </th>
+                            </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </form>
             </div>

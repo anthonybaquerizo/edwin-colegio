@@ -41,11 +41,13 @@
                                 <i class="fa fa-user"></i> Datos Básicos
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('user.courses') }}">
-                                <i class="fa fa-school"></i> Asignatura Matriculada
-                            </a>
-                        </li>
+                        @if (Auth::user()->user_type_id == 3)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.courses') }}">
+                                    <i class="fa fa-school"></i> Asignatura Matriculada
+                                </a>
+                            </li>
+                        @endif
                         @if (Auth::user()->user_type_id == 1)
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuAdmin"
@@ -71,7 +73,7 @@
                                         <i class="fa fa-plus"></i> Crear nuevo profesor
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 3])  }}">
+                                    <a class="dropdown-item" href="{{ route('admin.course.index')  }}">
                                         <i class="fa fa-list"></i> Lista de Cursos
                                     </a>
                                     <a class="dropdown-item" href="{{ route('admin.course.create') }}">

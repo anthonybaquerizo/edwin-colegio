@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Course;
+use App\Coursehour;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\UserCourse;
+use App\UserCourseHour;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -66,6 +68,19 @@ class UserCourseController extends Controller
                         $objUserCourser->user()->associate($objUser);
                         $objUserCourser->course()->associate($objCourse);
                         $objUserCourser->save();
+                        // Hours
+                        $courseHour = (new Coursehour())->all()
+                            ->where('course_id', '=', $objCourse->id);
+                        if ($courseHour->isNotEmpty()) {
+                            foreach ($courseHour as $objCourseHour) {
+                                $objUserCourseHour = (new UserCourseHour())->fill([
+                                    'status' => 0, // 0: Falto, 1: Asistion, 2: Tardanza
+                                ]);
+                                $objUserCourseHour->course()->associate($objUserCourser);
+                                $objUserCourseHour->hour()->associate($objCourseHour);
+                                $objUserCourseHour->save();
+                            }
+                        }
                     }
                 }
             }
