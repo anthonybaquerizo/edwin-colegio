@@ -10,7 +10,6 @@
                 <div id="messages"></div>
                 <form action="{{ route('admin.course.update', ['id' => $objCourse->id]) }}" method="POST"
                       id="frmGeneral">
-                    @method('put')
                     <div class="row">
                         <div class="col-xl-4 col-lg-4 col-sm-4 col-12">
                             <label for="grade_id">
@@ -91,6 +90,12 @@
                             <textarea id="description" name="description"
                                       rows="5"
                                       class="form-control">{{ $objCourse->description }}</textarea>
+                        </div>
+                        <div class="col-12" >
+                            <label for="syllable">
+                                Sílabo
+                            </label>
+                            <input type="file" class="form-control" id="syllable" name="syllable" value="" >
                         </div>
                     </div>
                     <div class="card-title border-bottom mt-3">

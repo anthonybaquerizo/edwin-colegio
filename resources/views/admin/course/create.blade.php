@@ -80,6 +80,12 @@
                                       rows="5"
                                       class="form-control"  ></textarea>
                         </div>
+                        <div class="col-12" >
+                            <label for="syllable">
+                                Sílabo
+                            </label>
+                            <input type="file" class="form-control" id="syllable" name="syllable" value="" >
+                        </div>
                     </div>
                     <div class="card-title border-bottom mt-3" >
                         <h5>Horario</h5>

@@ -16,8 +16,12 @@ $(function () {
         const button = $(this);
         helper.buttonLoading(button);
         const form = $('#frmGeneral');
+        var datos = new FormData(form[0]);
         axios.post(form.attr('action'),
-            form.serialize()
+            datos,
+            {
+                headers: {'Content-Type': 'multipart/form-data'},
+            }
         ).then(({data}) => {
             $('#messages').before(helper.alertDisplay('success', data.message));
             setTimeout(function() {

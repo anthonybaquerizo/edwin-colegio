@@ -67,7 +67,7 @@ Route::prefix('panel')->group(function() {
                 ->name('admin.course.store');
             Route::get('edit/{id}', 'Panel\\Admin\\CourseController@edit')
                 ->name('admin.course.edit');
-            Route::put('update/{id}', 'Panel\\Admin\\CourseController@update')
+            Route::post('update/{id}', 'Panel\\Admin\\CourseController@update')
                 ->name('admin.course.update');
         });
     });

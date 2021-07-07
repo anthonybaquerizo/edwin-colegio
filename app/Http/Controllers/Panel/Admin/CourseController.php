@@ -14,6 +14,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -98,6 +99,15 @@ class CourseController extends Controller
             $objCourse->period()->associate($objPeriod);
             $objCourse->teacher()->associate($objTeacher);
 
+            if ($request->hasFile('syllable')) {
+                $file = $request->file('syllable');
+                if ($file->getClientOriginalExtension() !== 'pdf') {
+                    throw new \Exception('El formato de PDF es incorrecto.');
+                }
+                $path = $file->store('course');
+                $objCourse->syllable = $path;
+            }
+
             DB::beginTransaction();
 
             $objCourse->save();
@@ -174,6 +184,20 @@ class CourseController extends Controller
             $objCourse->section()->associate($objSection);
             $objCourse->period()->associate($objPeriod);
             $objCourse->teacher()->associate($objTeacher);
+
+            if ($request->hasFile('syllable')) {
+
+                if (!empty($objCourse->syllable)) {
+                    Storage::delete($objCourse->syllable);
+                }
+
+                $file = $request->file('syllable');
+                if ($file->getClientOriginalExtension() !== 'pdf') {
+                    throw new \Exception('El formato de PDF es incorrecto.');
+                }
+                $path = $file->store('course');
+                $objCourse->syllable = $path;
+            }
 
             DB::beginTransaction();
 

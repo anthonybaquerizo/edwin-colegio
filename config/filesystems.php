@@ -80,6 +80,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('user') => storage_path('app\\user'),
+        public_path('course') => storage_path('app\\course'),
     ],
 
 ];
