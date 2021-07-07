@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\UserCourse;
 use App\UserCourseHour;
+use App\UserCourseProm;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -119,6 +120,16 @@ class UserCourseController extends Controller
             }
         }
         return response()->json(['message' => 'Se asignado las matriculas correctamente.']);
+    }
+
+    public function notes($courseId)
+    {
+        $objCourse = Course::find($courseId);
+        $notes = (new UserCourseProm())->getStudentNote($objCourse->id, Auth::user()->id);
+        return view('note', compact(
+            'objCourse',
+            'notes'
+        ));
     }
 
 }

@@ -41,8 +41,11 @@ Route::prefix('panel')->group(function() {
             ->name('course.user.store');
         Route::get('course/show/{courseId}', 'Panel\\UserCourseController@show')
             ->name('course.user.show');
+        // asistencias
         Route::get('course/hour/{courseId}', 'Panel\\UserCourseController@hour')
             ->name('course.user.hour');
+        Route::get('course/note/{courseId}', 'Panel\\UserCourseController@notes')
+            ->name('course.user.note');
     });
 
     Route::prefix('teacher')->group(function() {

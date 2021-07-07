@@ -58,4 +58,26 @@ class UserCourseProm extends Model
             ->get();
     }
 
+    /**
+     * @param $courseId
+     * @return \Illuminate\Support\Collection
+     */
+    public function getStudentNote($courseId, $userId)
+    {
+        return DB::table('user_course')
+            ->join('user_course_prom', 'user_course.id', '=', 'user_course_prom.user_course_id', 'inner')
+            ->where('user_course.course_id', '=', $courseId)
+            ->where('user_course.user_id', '=', $userId)
+            ->select(
+                'user_course_prom.*',
+                'user_course.prom_1',
+                'user_course.prom_2',
+                'user_course.prom_3',
+                DB::raw('user_course.prom_final AS course_prom_final')
+            )
+            ->orderBy('user_course_prom.id', 'ASC')
+            ->limit(3)
+            ->get();
+    }
+
 }

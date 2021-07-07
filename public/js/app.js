@@ -37953,7 +37953,7 @@ $(function () {
     nt = isNaN(nt) ? 0 : nt;
     var ti = parseFloat(document.getElementById('prom_ti[' + position + ']').value);
     ti = isNaN(ti) ? 0 : ti;
-    var ef = parseFloat(document.getElementById('prom_final[' + position + ']').value);
+    var ef = parseFloat(document.getElementById('prom_ef[' + position + ']').value);
     ef = isNaN(ef) ? 0 : ef;
     document.getElementById('prom_final[' + position + ']').value = (nt * 0.2 + ti * 0.3 + ef * 0.5).toFixed(2);
   };
