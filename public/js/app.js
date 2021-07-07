@@ -37773,6 +37773,51 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/js/user_course.js":
+/*!*************************************!*\
+  !*** ./resources/js/user_course.js ***!
+  \*************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helper */ "./resources/js/helper.js");
+/*!
+ *
+ * @version 1.0.0
+ */
+
+var objUserCourse = {};
+$(function () {
+  /**
+   * Asigna los cursos al alumno
+   */
+  objUserCourse.save = function () {
+    var button = $(this);
+    _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonLoading(button);
+    var frm = $('#frmGeneral');
+    axios.post(frm.attr('action'), frm.serialize()).then(function (_ref) {
+      var data = _ref.data;
+      $('#messages').before(_helper__WEBPACK_IMPORTED_MODULE_0__["default"].alertDisplay('success', data.message));
+      setTimeout(function () {
+        location.href = _helper__WEBPACK_IMPORTED_MODULE_0__["default"].BASE_URL + 'home';
+      }, 1000);
+    })["catch"](function (_ref2) {
+      var data = _ref2.data;
+      var errors = Object.entries(data.errors);
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].errorDisplay(errors);
+    })["finally"](function () {
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonCloseLoading(button);
+    });
+  };
+});
+$(document).ready(function () {
+  $('#btnUserCourse').click(objUserCourse.save);
+});
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -37785,9 +37830,9 @@ $(document).ready(function () {
 /***/ }),
 
 /***/ 0:
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/home.js ./resources/js/admin/user/list.js ./resources/js/admin/user/create.js ./resources/js/admin/user/edit.js ./resources/js/admin/course/create.js ./resources/sass/app.scss ***!
-  \**********************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/home.js ./resources/js/admin/user/list.js ./resources/js/admin/user/create.js ./resources/js/admin/user/edit.js ./resources/js/admin/course/create.js ./resources/js/user_course.js ./resources/sass/app.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37797,6 +37842,7 @@ __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user\create.js */"./resources/js/admin/user/create.js");
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user\edit.js */"./resources/js/admin/user/edit.js");
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\course\create.js */"./resources/js/admin/course/create.js");
+__webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\user_course.js */"./resources/js/user_course.js");
 module.exports = __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\sass\app.scss */"./resources/sass/app.scss");
 
 

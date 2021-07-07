@@ -100,9 +100,11 @@
                                                             data-id="{{ $item->id }}" >
                                                         <i class="fa fa-trash-alt" ></i> Eliminar
                                                     </button>
-                                                    <a href="{{ route('admin.user_course.index', ['userId' => $item->id]) }}" class="dropdown-item" >
-                                                        <i class="fa fa-th-list" ></i> Elegir Curso(s)
-                                                    </a>
+                                                    @if ($objUserType->user_type_id == 3)
+                                                        <a href="{{ route('course.user', ['userId' => $item->id]) }}" class="dropdown-item" >
+                                                            <i class="fa fa-th-list" ></i> Elegir Curso(s)
+                                                        </a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>

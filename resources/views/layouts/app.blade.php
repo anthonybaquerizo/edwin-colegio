@@ -38,46 +38,48 @@
                     @auth
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('home')  }}">
-                                <i class="fa fa-user" ></i> Datos Básicos
+                                <i class="fa fa-user"></i> Datos Básicos
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fa fa-school" ></i> Asignatura Matriculada
+                            <a class="nav-link" href="{{ route('user.courses') }}">
+                                <i class="fa fa-school"></i> Asignatura Matriculada
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuAdmin"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                <i class="fa fa-user-secret" ></i> Administrable
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuAdmin">
-                                <a class="dropdown-item" href="#" >
-                                    <i class="fa fa-bullhorn" ></i> Publicidad
+                        @if (Auth::user()->user_type_id == 1)
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuAdmin"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user-secret"></i> Administrable
                                 </a>
-                                <div class="dropdown-divider" ></div>
-                                <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 3])  }}" >
-                                    <i class="fa fa-list" ></i> Lista de alumnos
-                                </a>
-                                <a class="dropdown-item" href="{{ route('admin.user.create', ['type' => 3]) }}" >
-                                    <i class="fa fa-plus" ></i> Crear nuevo alumno
-                                </a>
-                                <div class="dropdown-divider" ></div>
-                                <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 2])  }}" >
-                                    <i class="fa fa-list" ></i> Lista de profesores
-                                </a>
-                                <a class="dropdown-item" href="{{ route('admin.user.create', ['type' => 2]) }}" >
-                                    <i class="fa fa-plus" ></i> Crear nuevo profesor
-                                </a>
-                                <div class="dropdown-divider" ></div>
-                                <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 3])  }}" >
-                                    <i class="fa fa-list" ></i> Lista de Cursos
-                                </a>
-                                <a class="dropdown-item" href="{{ route('admin.course.create') }}" >
-                                    <i class="fa fa-plus" ></i> Crear nuevo profesor
-                                </a>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuAdmin">
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fa fa-bullhorn"></i> Publicidad
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 3])  }}">
+                                        <i class="fa fa-list"></i> Lista de alumnos
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('admin.user.create', ['type' => 3]) }}">
+                                        <i class="fa fa-plus"></i> Crear nuevo alumno
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 2])  }}">
+                                        <i class="fa fa-list"></i> Lista de profesores
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('admin.user.create', ['type' => 2]) }}">
+                                        <i class="fa fa-plus"></i> Crear nuevo profesor
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 3])  }}">
+                                        <i class="fa fa-list"></i> Lista de Cursos
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('admin.course.create') }}">
+                                        <i class="fa fa-plus"></i> Crear nuevo curso
+                                    </a>
+                                </div>
+                            </li>
+                        @endif
                     @endauth
                 </ul>
 
@@ -86,7 +88,7 @@
                     <!-- Authentication Links -->
                     @auth
                         <li class="nav-item">
-                            <span class="nav-link active" >
+                            <span class="nav-link active">
                                 {{ Auth::user()->info->getName() }}
                             </span>
                         </li>
@@ -94,7 +96,7 @@
                             <a class="nav-link" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <i class="fa fa-sign-out-alt" ></i> Cerrar Sesión
+                                <i class="fa fa-sign-out-alt"></i> Cerrar Sesión
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

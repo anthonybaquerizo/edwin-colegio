@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Panel\User\UpdateRequest;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -49,6 +50,18 @@ class UserController extends Controller
         $objUserInfo->photo_path = $path;
         $objUserInfo->save();
         return response()->json(['message' => 'Su imagen fue cambiada correctamente.']);
+    }
+
+    /**
+     * Lista de cursos del usuario
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function courses()
+    {
+        $courses = (new User())->searchAlumnCourses(Auth::user()->id);
+        return view('courses', compact(
+            'courses'
+        ));
     }
 
 }

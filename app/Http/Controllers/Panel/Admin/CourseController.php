@@ -44,6 +44,11 @@ class CourseController extends Controller
         ));
     }
 
+    public function show($id)
+    {
+
+    }
+
     /**
      * Vista para crear nuevo curso
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View

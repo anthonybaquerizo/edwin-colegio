@@ -29,8 +29,13 @@ Route::prefix('panel')->group(function() {
 
         Route::post('change_photo', 'Panel\\UserController@changePhoto');
 
+        Route::get('courses', 'Panel\\UserController@courses')
+            ->name('user.courses');
+
         Route::get('course/{userId}', 'Panel\\UserCourseController@course')
             ->name('course.user');
+        Route::post('course/store/{userId}', 'Panel\\UserCourseController@store')
+            ->name('course.user.store');
     });
 
     Route::prefix('admin')->group(function() {
@@ -54,6 +59,8 @@ Route::prefix('panel')->group(function() {
 
             Route::get('index', 'Panel\\Admin\\CourseController@index')
                 ->name('admin.course.index');
+             Route::get('show/{id}', 'Panel\\Admin\\CourseController@show')
+                ->name('admin.course.show');
             Route::get('create', 'Panel\\Admin\\CourseController@create')
                 ->name('admin.course.create');
             Route::post('store', 'Panel\\Admin\\CourseController@store')
