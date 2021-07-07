@@ -37336,6 +37336,51 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/admin/course/create.js":
+/*!*********************************************!*\
+  !*** ./resources/js/admin/course/create.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../helper */ "./resources/js/helper.js");
+/*!
+ *
+ * @version 1.0.0
+ */
+
+var objCourseCreate = {};
+$(function () {
+  /**
+   * Realiza la creación del usuario
+   */
+  objCourseCreate.save = function () {
+    var button = $(this);
+    _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonLoading(button);
+    var form = $('#frmGeneral');
+    axios.post(form.attr('action'), form.serialize()).then(function (_ref) {
+      var data = _ref.data;
+      $('#messages').before(_helper__WEBPACK_IMPORTED_MODULE_0__["default"].alertDisplay('success', data.message));
+      setTimeout(function () {
+        location.href = _helper__WEBPACK_IMPORTED_MODULE_0__["default"].BASE_URL + 'panel/admin/course/index/';
+      }, 1000);
+    })["catch"](function (_ref2) {
+      var data = _ref2.data;
+      var errors = Object.entries(data.errors);
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].errorDisplay(errors);
+    })["finally"](function () {
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonCloseLoading(button);
+    });
+  };
+});
+$(document).ready(function () {
+  $('#btnSaveCourse').click(objCourseCreate.save);
+});
+
+/***/ }),
+
 /***/ "./resources/js/admin/user/create.js":
 /*!*******************************************!*\
   !*** ./resources/js/admin/user/create.js ***!
@@ -37740,9 +37785,9 @@ $(document).ready(function () {
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/home.js ./resources/js/admin/user/list.js ./resources/js/admin/user/create.js ./resources/js/admin/user/edit.js ./resources/sass/app.scss ***!
-  \********************************************************************************************************************************************************************************************/
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/home.js ./resources/js/admin/user/list.js ./resources/js/admin/user/create.js ./resources/js/admin/user/edit.js ./resources/js/admin/course/create.js ./resources/sass/app.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37751,6 +37796,7 @@ __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\home.js */
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user\list.js */"./resources/js/admin/user/list.js");
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user\create.js */"./resources/js/admin/user/create.js");
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\user\edit.js */"./resources/js/admin/user/edit.js");
+__webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\course\create.js */"./resources/js/admin/course/create.js");
 module.exports = __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\sass\app.scss */"./resources/sass/app.scss");
 
 

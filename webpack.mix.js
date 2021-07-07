@@ -17,5 +17,6 @@ mix.js([
     'resources/js/admin/user/list.js',
     'resources/js/admin/user/create.js',
     'resources/js/admin/user/edit.js',
+    'resources/js/admin/course/create.js',
 ], 'public/js')
     .sass('resources/sass/app.scss', 'public/css');

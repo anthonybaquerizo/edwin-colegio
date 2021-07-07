@@ -28,6 +28,9 @@ Route::prefix('panel')->group(function() {
         Route::put('update', 'Panel\\UserController@update');
 
         Route::post('change_photo', 'Panel\\UserController@changePhoto');
+
+        Route::get('course/{userId}', 'Panel\\UserCourseController@course')
+            ->name('course.user');
     });
 
     Route::prefix('admin')->group(function() {
@@ -46,6 +49,19 @@ Route::prefix('panel')->group(function() {
                 ->name('admin.user.update');
             Route::delete('delete/{id}', 'Panel\\Admin\\UserController@delete')
                 ->name('admin.user.delete');
+        });
+        Route::prefix('course')->group(function() {
+
+            Route::get('index', 'Panel\\Admin\\CourseController@index')
+                ->name('admin.course.index');
+            Route::get('create', 'Panel\\Admin\\CourseController@create')
+                ->name('admin.course.create');
+            Route::post('store', 'Panel\\Admin\\CourseController@store')
+                ->name('admin.course.store');
+            Route::get('edit/{id}', 'Panel\\Admin\\CourseController@edit')
+                ->name('admin.course.edit');
+            Route::put('update/{id}', 'Panel\\Admin\\CourseController@update')
+                ->name('admin.course.update');
         });
     });
 });

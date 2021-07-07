@@ -83,4 +83,14 @@ class User extends Authenticatable
             ->paginate();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public static function getTeacher(): \Illuminate\Database\Eloquent\Collection
+    {
+        return (new User())->newQuery()
+            ->where('user_type_id', 2)
+            ->get();
+    }
+
 }

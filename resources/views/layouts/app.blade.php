@@ -69,6 +69,13 @@
                                 <a class="dropdown-item" href="{{ route('admin.user.create', ['type' => 2]) }}" >
                                     <i class="fa fa-plus" ></i> Crear nuevo profesor
                                 </a>
+                                <div class="dropdown-divider" ></div>
+                                <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 3])  }}" >
+                                    <i class="fa fa-list" ></i> Lista de Cursos
+                                </a>
+                                <a class="dropdown-item" href="{{ route('admin.course.create') }}" >
+                                    <i class="fa fa-plus" ></i> Crear nuevo profesor
+                                </a>
                             </div>
                         </li>
                     @endauth

@@ -4,43 +4,25 @@
     <div class="container" >
         <div class="card">
             <div class="card-header">
-                Lista de {{ $objUserType->name }}
+                Lista de Cursos
             </div>
             <div class="card-body">
                 <div id="messages" ></div>
-                <form action="{{ route('admin.user.index', ['type' => $objUserType->id]) }}" method="POST" >
+                <form action="{{ route('admin.course.index') }}" method="GET" >
                     <div class="row" >
                         <div class="col-xl-4 col-lg-4 col-md-4 col-12" >
                             <div class="form-group" >
                                 <label for="txt_dni">
-                                    DNI
+                                    Nombre
                                 </label>
-                                <input type="text" class="form-control" id="txt_dni"
-                                       value="" >
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-12" >
-                            <div class="form-group" >
-                                <label for="txt_names">
-                                    Nombre y Apellido
-                                </label>
-                                <input type="text" class="form-control" id="txt_names"
-                                       value="" >
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-12" >
-                            <div class="form-group" >
-                                <label for="txt_username">
-                                    Usuario
-                                </label>
-                                <input type="text" class="form-control" id="txt_username"
+                                <input type="text" class="form-control" name="txt_name"
                                        value="" >
                             </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mb-2" >
-                        <a href="{{ route('admin.user.create', ['type' => $objUserType->id]) }}" class="btn btn-primary mr-2" >
-                            <i class="fa fa-plus" ></i> Crear nuevo {{ $objUserType->name }}
+                        <a href="{{ route('admin.course.create') }}" class="btn btn-primary mr-2" >
+                            <i class="fa fa-plus" ></i> Crear nuevo curso
                         </a>
                         <button type="button" role="button" class="btn btn-danger" >
                             <i class="fa fa-search" ></i> Buscar
@@ -51,11 +33,13 @@
                             <thead class="table-light" >
                             <tr>
                                 <th class="text-center" >Fecha</th>
-                                <th class="text-center" >Nro. Documento</th>
-                                <th class="text-left" >{{ $objUserType->name }}</th>
-                                <th class="text-left" >Email</th>
-                                <th class="text-left" >Usuario</th>
-                                <th class="text-center" >Estado</th>
+                                <th class="text-left" >Código</th>
+                                <th class="text-left" >Asignatura</th>
+                                <th class="text-left" >Profesor</th>
+                                <th class="text-left" >Grado</th>
+                                <th class="text-left" >Sección</th>
+                                <th class="text-left" >Periodo</th>
+                                <th class="text-left" >Descripción</th>
                                 <th class="text-center" ></th>
                             </tr>
                             </thead>
@@ -66,24 +50,26 @@
                                         <td class="text-center" >
                                             @php echo date('d/m/Y', strtotime($item->created_at)); @endphp
                                         </td>
-                                        <td class="text-center" >
-                                            {{ $item->dni }}
+                                        <td class="text-left" >
+                                            {{ $item->code }}
                                         </td>
                                         <td class="text-left" >
-                                            {{ $item->last_name }}, {{ $item->names }}
+                                            {{ $item->name }}
                                         </td>
                                         <td class="text-left" >
-                                            {{ $item->email }}
+                                            {{ $item->teacher }}
                                         </td>
                                         <td class="text-left" >
-                                            {{ $item->username }}
+                                            {{ $item->grade }}
                                         </td>
-                                        <td class="text-center" >
-                                            @if ($item->status)
-                                                <span class="badge badge-primary" >Activo</span>
-                                            @else
-                                                <span class="badge badge-danger" >Inactivo</span>
-                                            @endif
+                                        <td class="text-left" >
+                                            {{ $item->section }}
+                                        </td>
+                                        <td class="text-left" >
+                                            {{ $item->period }}
+                                        </td>
+                                        <td class="text-left" >
+                                            {{ $item->description }}
                                         </td>
                                         <td class="text-center" >
                                             <div class="dropdown" >
@@ -93,15 +79,8 @@
                                                     <i class="fa fa-th-list" ></i> Opciones
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a href="{{ route('admin.user.edit', ['id' => $item->id]) }}" class="dropdown-item" >
+                                                    <a href="{{ route('admin.course.edit', ['id' => $item->id]) }}" class="dropdown-item" >
                                                         <i class="fa fa-edit" ></i> Editar
-                                                    </a>
-                                                    <button type="button" role="button" class="dropdown-item option-delete"
-                                                            data-id="{{ $item->id }}" >
-                                                        <i class="fa fa-trash-alt" ></i> Eliminar
-                                                    </button>
-                                                    <a href="{{ route('admin.user_course.index', ['userId' => $item->id]) }}" class="dropdown-item" >
-                                                        <i class="fa fa-th-list" ></i> Elegir Curso(s)
                                                     </a>
                                                 </div>
                                             </div>
