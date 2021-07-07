@@ -10,6 +10,7 @@ use App\UserCourse;
 use App\UserCourseHour;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserCourseController extends Controller
 {
@@ -50,6 +51,25 @@ class UserCourseController extends Controller
         $objCourse = Course::find($courseId);
         return view('user_course_show', compact(
             'objCourse'
+        ));
+    }
+
+    /**
+     * @param Request $request
+     * @param $courseId
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function hour(Request $request, $courseId)
+    {
+        $objUserCourse = UserCourse::all()
+            ->where('course_id', '=', $courseId)
+            ->where('user_id', '=', Auth::user()->id)
+            ->first();
+        if (empty($objUserCourse)) {
+            abort(404);
+        }
+        return view('user_course_assistance', compact(
+            'objUserCourse'
         ));
     }
 

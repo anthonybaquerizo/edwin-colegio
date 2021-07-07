@@ -52,4 +52,12 @@ class UserCourse extends Model
         return $this->belongsTo(Course::class, 'course_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function assistance(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(UserCourseHour::class, 'user_course_id', 'id');
+    }
+
 }

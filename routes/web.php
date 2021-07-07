@@ -38,6 +38,8 @@ Route::prefix('panel')->group(function() {
             ->name('course.user.store');
         Route::get('course/show/{courseId}', 'Panel\\UserCourseController@show')
             ->name('course.user.show');
+        Route::get('course/hour/{courseId}', 'Panel\\UserCourseController@hour')
+            ->name('course.user.hour');
     });
 
     Route::prefix('admin')->group(function() {

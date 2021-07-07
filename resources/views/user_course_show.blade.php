@@ -5,9 +5,17 @@
         <div class="card">
             <div class="card-header">
                 Matricula asignada <br>
-                <a href="#" class="btn btn-secondary btn-sm" >
-                    <i class="fa fa-external-link"></i> Mis asistencias
-                </a>
+                <div class="btn-group" >
+                    <a href="{{ route('course.user.hour', ['courseId' => $objCourse->id]) }}" class="btn btn-secondary btn-sm" >
+                        <i class="fa fa-angle-right"></i> Mis asistencias
+                    </a>
+                    <a href="{{ route('course.user.hour', ['courseId' => $objCourse->id]) }}" class="btn btn-secondary btn-sm" >
+                        <i class="fa fa-angle-right"></i> Mis Notas
+                    </a>
+                    <a href="{{ route('course.user.hour', ['courseId' => $objCourse->id]) }}" class="btn btn-secondary btn-sm" >
+                        <i class="fa fa-angle-right"></i> Recursos
+                    </a>
+                </div>
             </div>
             <div class="card-body">
                 <div id="messages"></div>
