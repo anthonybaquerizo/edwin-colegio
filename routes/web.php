@@ -59,6 +59,10 @@ Route::prefix('panel')->group(function() {
             ->name('teacher.courses.resource.save');
         Route::post('resource/delete/{resourceId}', 'Panel\\TeacherCourseController@deleteResource')
             ->name('teacher.courses.resource.delete');
+        Route::get('note/{courseId}', 'Panel\\TeacherCourseController@note')
+            ->name('teacher.courses.note');
+        Route::post('note/save/{courseId}', 'Panel\\TeacherCourseController@saveNote')
+            ->name('teacher.courses.note.save');
     });
 
     Route::prefix('admin')->group(function() {

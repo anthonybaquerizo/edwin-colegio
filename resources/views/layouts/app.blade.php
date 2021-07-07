@@ -62,9 +62,9 @@
                                     <i class="fa fa-user-secret"></i> Administrable
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuAdmin">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-bullhorn"></i> Publicidad
-                                    </a>
+{{--                                    <a class="dropdown-item" href="#">--}}
+{{--                                        <i class="fa fa-bullhorn"></i> Publicidad--}}
+{{--                                    </a>--}}
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('admin.user.index', ['type' => 3])  }}">
                                         <i class="fa fa-list"></i> Lista de alumnos

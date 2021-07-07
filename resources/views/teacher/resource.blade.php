@@ -39,7 +39,7 @@
                     </button>
                 </div>
                 <div class="card-title border-bottom" >
-                    <h5>Datos del Usuario</h5>
+                    <h5>Recursos</h5>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-sm table-bordered table-hover" id="tblList">

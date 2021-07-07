@@ -7,7 +7,9 @@ use App\CourseResource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Panel\Teacher\ResourceRequest;
 use App\User;
+use App\UserCourse;
 use App\UserCourseHour;
+use App\UserCourseProm;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -129,6 +131,92 @@ class TeacherCourseController extends Controller
         Storage::delete($objResource->file_path);
         $objResource->delete();
         return back();
+    }
+
+    /**
+     * @param $courseId
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function note($courseId)
+    {
+        $objCourse = Course::find($courseId);
+        $result = (new UserCourseProm())->getStudent($objCourse->id);
+        return view('teacher.note', compact(
+            'objCourse',
+            'result'
+        ));
+    }
+
+    /**
+     * @param Request $request
+     * @param $courseId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveNote(Request $request, $courseId)
+    {
+        $objCourse = Course::find($courseId);
+        $prom_type = $request->input('prom_type');
+
+        $work_note1 = $request->input('work_note1');
+        $work_note2 = $request->input('work_note2');
+        $work_note3 = $request->input('work_note3');
+        $work_investigation = $request->input('work_investigation');
+        $final_exam = $request->input('final_exam');
+        $prom_nt = $request->input('prom_nt');
+        $prom_ti = $request->input('prom_ti');
+        $prom_ef = $request->input('prom_ef');
+        $prom_final = $request->input('prom_final');
+        $user_id = $request->input('user_id');
+        if (!empty($user_id)) {
+            foreach ($user_id as $key => $value) {
+                $userId = (isset($user_id[$key]) && !empty($user_id[$key])) ? $user_id[$key] : null;
+                $workNote1 = (isset($work_note1[$key]) && !empty($work_note1[$key])) ? $work_note1[$key] : 0;
+                $workNote2 = (isset($work_note2[$key]) && !empty($work_note2[$key])) ? $work_note2[$key] : 0;
+                $workNote3 = (isset($work_note3[$key]) && !empty($work_note3[$key])) ? $work_note3[$key] : 0;
+                $workInvestigation = (isset($work_investigation[$key]) && !empty($work_investigation[$key])) ? $work_investigation[$key] : 0;
+                $finalExam = (isset($final_exam[$key]) && !empty($final_exam[$key])) ? $final_exam[$key] : 0;
+                $promNT = (isset($prom_nt[$key]) && !empty($prom_nt[$key])) ? $prom_nt[$key] : 0;
+                $promTI = (isset($prom_ti[$key]) && !empty($prom_ti[$key])) ? $prom_ti[$key] : 0;
+                $promEF = (isset($prom_ef[$key]) && !empty($prom_ef[$key])) ? $prom_ef[$key] : 0;
+                $promFinal = (isset($prom_final[$key]) && !empty($prom_final[$key])) ? $prom_final[$key] : 0;
+                /** @var UserCourse $objUserCourse */
+                $objUserCourse = UserCourse::all()
+                    ->where('user_id', '=', $userId)
+                    ->where('course_id', '=', $objCourse->id)
+                    ->first();
+                if (!empty($objUserCourse)) {
+                    $objUserCourseProm = (new UserCourseProm())->fill([
+                        'work_note1' => $workNote1,
+                        'work_note2' => $workNote2,
+                        'work_note3' => $workNote3,
+                        'work_investigation' => $workInvestigation,
+                        'final_exam' => $finalExam,
+                        'prom_nt' => $promNT,
+                        'prom_ti' => $promTI,
+                        'prom_ef' => $promEF,
+                        'prom_final' => $promFinal,
+                        'status' => 1,
+                    ]);
+                    $objUserCourseProm->userCourse()->associate($objUserCourse);
+                    $objUserCourseProm->save();
+                    switch ($prom_type)
+                    {
+                        case 1:
+                            $objUserCourse->prom_1 = $promFinal;
+                            break;
+                        case 3:
+                            $objUserCourse->prom_2 = $promFinal;
+                            break;
+                        case 2:
+                            $objUserCourse->prom_3 = $promFinal;
+                            break;
+                    }
+                    $objUserCourse->calculateFinalProm();
+                    $objUserCourse->save();
+                }
+            }
+        }
+        return response()->json(['message' => 'Nota guardada correctamente.']);
     }
 
 }

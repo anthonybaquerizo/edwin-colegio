@@ -36,6 +36,11 @@ class UserCourse extends Model
             ->first();
     }
 
+    public function calculateFinalProm()
+    {
+        $this->prom_final = round(($this->prom_1 + $this->prom_2 + $this->prom_3) / 3, 2);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

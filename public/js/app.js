@@ -37878,6 +37878,95 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/js/teacher/note.js":
+/*!**************************************!*\
+  !*** ./resources/js/teacher/note.js ***!
+  \**************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../helper */ "./resources/js/helper.js");
+/*!
+ *
+ * @version 1.0.0
+ */
+
+var objNote = {};
+$(function () {
+  /**
+   * Realiza la creación del usuario
+   */
+  objNote.save = function () {
+    var button = $(this);
+    _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonLoading(button);
+    var form = $('#frmGeneral');
+    axios.post(form.attr('action'), form.serialize()).then(function (_ref) {
+      var data = _ref.data;
+      $('#messages').before(_helper__WEBPACK_IMPORTED_MODULE_0__["default"].alertDisplay('success', data.message));
+      setTimeout(function () {
+        window.location = location.href;
+      }, 1000);
+    })["catch"](function (_ref2) {
+      var data = _ref2.data;
+      var errors = Object.entries(data.errors);
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].errorDisplay(errors);
+    })["finally"](function () {
+      _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonCloseLoading(button);
+    });
+  };
+
+  objNote.calculateNT = function () {
+    var row = $(this).parents('tr');
+    var position = row.data('position');
+    var work1 = parseFloat(document.getElementById('work_note1[' + position + ']').value);
+    work1 = isNaN(work1) ? 0 : work1;
+    var work2 = parseFloat(document.getElementById('work_note2[' + position + ']').value);
+    work2 = isNaN(work2) ? 0 : work2;
+    var work3 = parseFloat(document.getElementById('work_note3[' + position + ']').value);
+    work3 = isNaN(work3) ? 0 : work3;
+    document.getElementById('prom_nt[' + position + ']').value = ((work1 + work2 + work3) / 3).toFixed(2);
+    objNote.calculateProm(position);
+  };
+
+  objNote.calculateTI = function () {
+    var row = $(this).parents('tr');
+    var position = row.data('position');
+    var value = parseFloat(document.getElementById('work_investigation[' + position + ']').value);
+    value = isNaN(value) ? 0 : value;
+    document.getElementById('prom_ti[' + position + ']').value = value.toFixed(2);
+    objNote.calculateProm(position);
+  };
+
+  objNote.calculateEF = function () {
+    var row = $(this).parents('tr');
+    var position = row.data('position');
+    var value = parseFloat(document.getElementById('final_exam[' + position + ']').value);
+    value = isNaN(value) ? 0 : value;
+    document.getElementById('prom_ef[' + position + ']').value = value.toFixed(2);
+    objNote.calculateProm(position);
+  };
+
+  objNote.calculateProm = function (position) {
+    var nt = parseFloat(document.getElementById('prom_nt[' + position + ']').value);
+    nt = isNaN(nt) ? 0 : nt;
+    var ti = parseFloat(document.getElementById('prom_ti[' + position + ']').value);
+    ti = isNaN(ti) ? 0 : ti;
+    var ef = parseFloat(document.getElementById('prom_final[' + position + ']').value);
+    ef = isNaN(ef) ? 0 : ef;
+    document.getElementById('prom_final[' + position + ']').value = (nt * 0.2 + ti * 0.3 + ef * 0.5).toFixed(2);
+  };
+});
+$(document).ready(function () {
+  $('#btnSaveNote').click(objNote.save);
+  $(document).on('keyup', '.calculate-nt', objNote.calculateNT);
+  $(document).on('keyup', '.calculate-ti', objNote.calculateTI);
+  $(document).on('keyup', '.calculate-ef', objNote.calculateEF);
+});
+
+/***/ }),
+
 /***/ "./resources/js/teacher/resource.js":
 /*!******************************************!*\
   !*** ./resources/js/teacher/resource.js ***!
@@ -37985,9 +38074,9 @@ $(document).ready(function () {
 /***/ }),
 
 /***/ 0:
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/home.js ./resources/js/admin/user/list.js ./resources/js/admin/user/create.js ./resources/js/admin/user/edit.js ./resources/js/admin/course/create.js ./resources/js/user_course.js ./resources/js/teacher/assistance.js ./resources/js/teacher/resource.js ./resources/sass/app.scss ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/home.js ./resources/js/admin/user/list.js ./resources/js/admin/user/create.js ./resources/js/admin/user/edit.js ./resources/js/admin/course/create.js ./resources/js/user_course.js ./resources/js/teacher/assistance.js ./resources/js/teacher/resource.js ./resources/js/teacher/note.js ./resources/sass/app.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -38000,6 +38089,7 @@ __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\admin\cour
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\user_course.js */"./resources/js/user_course.js");
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\teacher\assistance.js */"./resources/js/teacher/assistance.js");
 __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\teacher\resource.js */"./resources/js/teacher/resource.js");
+__webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\js\teacher\note.js */"./resources/js/teacher/note.js");
 module.exports = __webpack_require__(/*! D:\xampp7-4\htdocs\edwin-colegio\resources\sass\app.scss */"./resources/sass/app.scss");
 
 

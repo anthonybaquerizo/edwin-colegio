@@ -110,7 +110,7 @@ class User extends Authenticatable
             ->join('user', 'course.user_teacher_id', '=', 'user.id', 'inner')
             ->join('user_info', 'user.id', '=', 'user_info.user_id', 'inner')
             ->where('user_course.user_id', '=', $userId)
-            ->paginate();
+            ->paginate(3);
     }
 
     /**
