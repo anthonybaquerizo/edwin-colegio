@@ -37360,7 +37360,12 @@ $(function () {
     var button = $(this);
     _helper__WEBPACK_IMPORTED_MODULE_0__["default"].buttonLoading(button);
     var form = $('#frmGeneral');
-    axios.post(form.attr('action'), form.serialize()).then(function (_ref) {
+    var datos = new FormData(form[0]);
+    axios.post(form.attr('action'), datos, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(function (_ref) {
       var data = _ref.data;
       $('#messages').before(_helper__WEBPACK_IMPORTED_MODULE_0__["default"].alertDisplay('success', data.message));
       setTimeout(function () {
@@ -37409,7 +37414,7 @@ $(function () {
     row += '</td>';
     row += '<td>';
     row += '<button type="button" role="button" class="btn btn-danger btn-sm option-course-hour-delete" >';
-    row += '<i class="fa fa-trash-o" ></i> Eliminar';
+    row += '<i class="fa fa-trash" ></i> Eliminar';
     row += '</button>';
     row += '<input type="hidden" class="d-none" id="course_date_operation[' + position + ']" name="course_date_operation[' + position + ']" value="1" >';
     row += '</td>';

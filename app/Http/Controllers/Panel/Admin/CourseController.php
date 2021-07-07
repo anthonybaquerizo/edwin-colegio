@@ -98,6 +98,13 @@ class CourseController extends Controller
             $objCourse->period()->associate($objPeriod);
             $objCourse->teacher()->associate($objTeacher);
 
+            $file = $request->file('syllable');
+            if ($file->getClientOriginalExtension() !== 'pdf') {
+                throw new \Exception('El formato de PDF es incorrecto.');
+            }
+            $path = $file->store('course');
+            $objCourse->syllable = $path;
+
             DB::beginTransaction();
 
             $objCourse->save();

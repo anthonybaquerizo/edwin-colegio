@@ -20,6 +20,7 @@ class Course extends Model
         'code',
         'name',
         'description',
+        'syllable',
         'status',
     ];
 
