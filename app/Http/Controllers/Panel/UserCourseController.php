@@ -42,6 +42,19 @@ class UserCourseController extends Controller
 
     /**
      * @param Request $request
+     * @param $courseId
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Request $request, $courseId)
+    {
+        $objCourse = Course::find($courseId);
+        return view('user_course_show', compact(
+            'objCourse'
+        ));
+    }
+
+    /**
+     * @param Request $request
      * @param $userId
      * @return \Illuminate\Http\JsonResponse
      */

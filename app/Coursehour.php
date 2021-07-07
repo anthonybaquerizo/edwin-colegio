@@ -23,6 +23,10 @@ class Coursehour extends Model
         'status' => 'boolean',
     ];
 
+    protected $dates = [
+        'date',
+    ];
+
     public $timestamps = false;
 
     /**

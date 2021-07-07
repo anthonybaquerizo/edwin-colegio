@@ -29,11 +29,11 @@
                                 <tr>
                                     <td class="text-center">
                                         @if ($item->status == 1)
-                                            <span class="badge badge-secondary" >Sin Calificación</span>
+                                            <span class="badge badge-secondary">Sin Calificación</span>
                                         @elseif ($item->status == 2)
-                                            <span class="badge badge-success" >Aprobado</span>
+                                            <span class="badge badge-success">Aprobado</span>
                                         @else
-                                            <span class="badge badge-danger" >Desaprobado</span>
+                                            <span class="badge badge-danger">Desaprobado</span>
                                         @endif
                                     </td>
                                     <td class="text-left">
@@ -58,8 +58,9 @@
                                         {{ $item->description }}
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('admin.course.show', ['id' => $item->course_id]) }}" class="btn btn-primary btn-sm" >
-                                            <i class="fa fa-eye" ></i> Ver Curso
+                                        <a href="{{ route('course.user.show', ['courseId' => $item->course_id]) }}"
+                                           class="btn btn-primary btn-sm">
+                                            <i class="fa fa-eye"></i> Ver Curso
                                         </a>
                                     </td>
                                 </tr>

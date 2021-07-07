@@ -36,6 +36,8 @@ Route::prefix('panel')->group(function() {
             ->name('course.user');
         Route::post('course/store/{userId}', 'Panel\\UserCourseController@store')
             ->name('course.user.store');
+        Route::get('course/show/{courseId}', 'Panel\\UserCourseController@show')
+            ->name('course.user.show');
     });
 
     Route::prefix('admin')->group(function() {

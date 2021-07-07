@@ -121,7 +121,7 @@
                                                 <input type="date" class="form-control"
                                                        id="course_date_value[@php echo $position @endphp]"
                                                        name="course_date_value[@php echo $position @endphp]"
-                                                       value="{{ $value->date }}"/>
+                                                       value="{{ $value->date->format('Y-m-d') }}"/>
                                             </div>
                                         </td>
                                         <td>
