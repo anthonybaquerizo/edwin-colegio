@@ -10942,3 +10942,9 @@ a.text-dark:focus {
   }
 }
 
+.card-header {
+  color: #fff !important;
+  font-weight: 700 !important;
+  background-color: #3490dc !important;
+}
+

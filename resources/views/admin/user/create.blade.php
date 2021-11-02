@@ -69,34 +69,35 @@
                     </label>
                     <div class="col-xl-10 col-lg-10 col-md-9 col-sm-7 col-12">
                         <select class="custom-select" id="cbo_gender">
+                            <option value="">---Seleccione---</option>
                             <option value="H" >Hombre</option>
                             <option value="M" >Mujer</option>
-                            <option value="O" >Reservado
-                            </option>
                         </select>
                     </div>
                 </div>
-                <div class="card-title border-bottom">
-                    <h5>Datos del Usuario</h5>
-                </div>
-                <div class="form-group row">
-                    <label for="txt_email" class="col-xl-2 col-lg-2 col-md-3 col-sm-5 col-12">
-                        Usuario
-                    </label>
-                    <div class="col-xl-10 col-lg-10 col-md-9 col-sm-7 col-12">
-                        <input type="text" class="form-control" id="txt_username"
-                               maxlength="100"
-                               value="">
+                <div class="d-none" >
+                    <div class="card-title border-bottom">
+                        <h5>Datos del Usuario</h5>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="txt_email" class="col-xl-2 col-lg-2 col-md-3 col-sm-5 col-12">
-                        Contraseña
-                    </label>
-                    <div class="col-xl-10 col-lg-10 col-md-9 col-sm-7 col-12">
-                        <input type="text" class="form-control" id="txt_password"
-                               maxlength="100"
-                               value="">
+                    <div class="form-group row">
+                        <label for="txt_email" class="col-xl-2 col-lg-2 col-md-3 col-sm-5 col-12">
+                            Usuario
+                        </label>
+                        <div class="col-xl-10 col-lg-10 col-md-9 col-sm-7 col-12">
+                            <input type="text" class="form-control" id="txt_username"
+                                   maxlength="100"
+                                   value="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txt_email" class="col-xl-2 col-lg-2 col-md-3 col-sm-5 col-12">
+                            Contraseña
+                        </label>
+                        <div class="col-xl-10 col-lg-10 col-md-9 col-sm-7 col-12">
+                            <input type="text" class="form-control" id="txt_password"
+                                   maxlength="100"
+                                   value="">
+                        </div>
                     </div>
                 </div>
             </div>

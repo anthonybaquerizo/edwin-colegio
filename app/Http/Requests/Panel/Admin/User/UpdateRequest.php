@@ -31,8 +31,8 @@ class UpdateRequest extends FormRequest
             'txt_email' => ['required', 'email', 'max:100', 'unique:user,email,' . $this->route()->id],
             'txt_phone' => ['present', 'nullable', 'numeric', 'digits:9'],
             'cbo_gender' => ['required', Rule::in(['H', 'M', 'O'])],
-            'txt_username' => ['required', 'string', 'max:100', 'unique:user,username,' . $this->route()->id],
-            'txt_password' => ['present', 'nullable', 'string', 'max:100'],
+//            'txt_username' => ['required', 'string', 'max:100', 'unique:user,username,' . $this->route()->id],
+//            'txt_password' => ['present', 'nullable', 'string', 'max:100'],
         ];
     }
 

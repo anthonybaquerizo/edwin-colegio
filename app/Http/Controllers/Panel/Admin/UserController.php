@@ -88,11 +88,15 @@ class UserController extends Controller
             $path = $file->store('user');
         }
 
+        $username = substr($request->input('txt_names'), 0, 1)
+            . explode(' ', $request->input('txt_lastname'))[0]
+            . substr(explode(' ', $request->input('txt_lastname'))[1], 0, 1);
+
         $objUser = new User();
         $objUser->fill([
-           'username' => $request->input('txt_username'),
-           'email' => $request->input('txt_email'),
-           'password' => bcrypt($request->input('txt_password')),
+           'username' => strtolower($username),
+           'email' => strtolower($request->input('txt_email')),
+           'password' => bcrypt($request->input('txt_dni')),
            'status' => 1,
         ]);
         $objUser->type()->associate($objUserType);
@@ -100,8 +104,8 @@ class UserController extends Controller
         $objUserInfo = new UserInfo();
         $objUserInfo->fill([
             'dni' => $request->input('txt_dni'),
-            'names' => $request->input('txt_names'),
-            'last_name' => $request->input('txt_lastname'),
+            'names' => ucwords(strtolower($request->input('txt_names'))),
+            'last_name' => ucwords(strtolower($request->input('txt_lastname'))),
             'phone' => $request->input('txt_phone'),
             'photo_path' => $path,
             'gender' => $request->input('cbo_gender'),

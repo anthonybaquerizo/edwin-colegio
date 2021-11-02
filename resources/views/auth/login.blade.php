@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header bg-primary text-white font-weight-bold">Inicio de Sesión</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -59,6 +59,9 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="card-footer" >
+                    No recuerdas tu contraseña. <a href="/password/reset">Clic aquí</a>
                 </div>
             </div>
         </div>

@@ -31,8 +31,8 @@ class CreateRequest extends FormRequest
             'txt_email' => ['required', 'email', 'max:100', 'unique:user,email'],
             'txt_phone' => ['present', 'nullable', 'numeric', 'digits:9'],
             'cbo_gender' => ['required', Rule::in(['H', 'M', 'O'])],
-            'txt_username' => ['required', 'string', 'max:100', 'unique:user,username'],
-            'txt_password' => ['required', 'string', 'max:100'],
+//            'txt_username' => ['required', 'string', 'max:100', 'unique:user,username'],
+//            'txt_password' => ['required', 'string', 'max:100'],
         ];
     }
 
